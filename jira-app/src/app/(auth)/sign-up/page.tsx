@@ -1,9 +1,8 @@
-
+"use client"
+import {SignUpCard} from "@/feat/auth/components/sign-up"
 const Signup=()=>{
     return (
-        <div>
-            Sing up
-        </div>
+     <SignUpCard/>
     )
 }
 export default Signup
