@@ -11,15 +11,15 @@ interface AuthLayoutProps {
 
 const AuthLayout = ({children}: AuthLayoutProps) => {
     const pathname=usePathname();
-    const isSognIn=pathname==="/sign-in";
+    const isSignIn=pathname==="/sign-in";
     return (
         <main className='bg-neutral-100 min-h-screen'>
             <div className='mx-auto max-w-screen-2xl-p-4'>
                 <nav className='flex items-center justify-between'>
                     <Image src="/logo.svg" alt='Logo' width="200" height="200"/>
                     <Button asChild variant='secondary' size='lg'>
-                        <Link href=  {isSognIn ?"/sign-up":"/sign-in"}>
-                        {isSognIn ?"Sign-up":"Log in"}
+                        <Link href=  {isSignIn ?"/sign-up":"/sign-in"}>
+                        {isSignIn ?"Sign-up":"Log in"}
                         </Link>
                     </Button>
                 </nav>
