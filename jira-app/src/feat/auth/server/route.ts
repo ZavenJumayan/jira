@@ -2,11 +2,16 @@ import {Hono} from "hono";
 import {zValidator} from '@hono/zod-validator'
 import {loginSchema, registerSchema} from "../schemas";
 import {CreateAdminClient} from "@/lib/appwrite";
-import {ID} from "node-appwrite"
+import {Account, ID} from "node-appwrite"
 import {AUTH_COOKIE} from "@/feat/auth/constant";
 import {deleteCookie, setCookie} from "hono/cookie";
+import {sessionMiddleware} from "@/lib/session-middleware";
 
 const app = new Hono()
+    .get("/current",sessionMiddleware,(c)=>{
+        const user=c.get("user")
+        return c.json({data:user})
+    })
     .post("/login",
         zValidator("json", loginSchema),
         async (c) => {
@@ -30,7 +35,7 @@ const app = new Hono()
         async (c) => {
             const {name, email, password} = c.req.valid("json")
             const {Account} = await CreateAdminClient();
-             await Account.create(
+            await Account.create(
                 ID.unique(),
                 email,
                 password,
@@ -49,10 +54,12 @@ const app = new Hono()
             })
             return c.json({success: true})
         })
-    .post("/logout",(c)=>{
-        deleteCookie(c,AUTH_COOKIE);
-        return c.json({success: true})
+    .post("/logout", sessionMiddleware, async (c) => {
+            const account = c.get("account")
+            deleteCookie(c, AUTH_COOKIE);
+            await account.deleteSession("current")
+            return c.json({success: true})
         }
-        )
+    )
 
 export default app;
