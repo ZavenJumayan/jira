@@ -1,14 +1,13 @@
-"use client";
-
-import { z } from "zod";
+"use client"
+import {z} from "zod";
 import Link from "next/link";
-import { FcGoogle } from "react-icons/fc";
-import { FaGithub } from "react-icons/fa";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import {FcGoogle} from "react-icons/fc";
+import {FaGithub} from "react-icons/fa";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
 
-import { DottedSeparator } from "@/components/dotted-separator";
-import { Button } from "@/components/ui/button";
+import {DottedSeparator} from "@/components/dotted-separator";
+import {Button} from "@/components/ui/button";
 import {
     Card,
     CardContent,
@@ -16,7 +15,7 @@ import {
     CardHeader,
     CardTitle
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import {Input} from "@/components/ui/input";
 import {
     Form,
     FormControl,
@@ -24,11 +23,11 @@ import {
     FormItem,
     FormMessage,
 } from "@/components/ui/form";
-import { registerSchema } from "@/feat/auth/schemas";
-import { useRegister } from "@/feat/auth/api/use-register";
+import {registerSchema} from "@/feat/auth/schemas";
+import {useRegister} from "@/feat/auth/api/use-register";
 
 export const SignUpCard = () => {
-    const {mutate} = useRegister();
+    const {mutate, isPending} = useRegister();
 
     const form = useForm<z.infer<typeof registerSchema>>({
         resolver: zodResolver(registerSchema),
@@ -41,7 +40,7 @@ export const SignUpCard = () => {
 
     const onSubmit = (values: z.infer<typeof registerSchema>) => {
         mutate({
-            json:values
+            json: values
         });
     };
 
@@ -62,7 +61,7 @@ export const SignUpCard = () => {
             </CardHeader>
 
             <div className="px-7">
-                <DottedSeparator />
+                <DottedSeparator/>
             </div>
 
             <CardContent className="p-7">
@@ -71,63 +70,64 @@ export const SignUpCard = () => {
                         <FormField
                             name="name"
                             control={form.control}
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <FormItem>
                                     <FormControl>
-                                        <Input {...field} type="text" placeholder="Enter your name" />
+                                        <Input {...field} type="text" placeholder="Enter your name"/>
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage/>
                                 </FormItem>
                             )}
                         />
                         <FormField
                             name="email"
                             control={form.control}
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <FormItem>
                                     <FormControl>
-                                        <Input {...field} type="email" placeholder="Enter email address" />
+                                        <Input {...field} type="email" placeholder="Enter email address"/>
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage/>
                                 </FormItem>
                             )}
                         />
                         <FormField
                             name="password"
                             control={form.control}
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <FormItem>
                                     <FormControl>
-                                        <Input {...field} type="password" placeholder="Enter your password" />
+                                        <Input {...field} type="password" placeholder="Enter your password"/>
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage/>
                                 </FormItem>
                             )}
                         />
-                        <Button variant="primary" className="flex items-center justify-center w-full">
-                            Sign Up
+                        <Button disabled={isPending} variant="primary"
+                                className="flex items-center justify-center w-full">
+                            Register
                         </Button>
                     </form>
                 </Form>
             </CardContent>
 
             <div className="px-7">
-                <DottedSeparator />
+                <DottedSeparator/>
             </div>
 
             <CardContent className="p-7 flex flex-col gap-y-4">
-                <Button variant="secondary" size="lg" className="w-full">
-                    <FcGoogle className="mr-2 h-5 w-5" />
+                <Button disabled={isPending} variant="secondary" size="lg" className="w-full">
+                    <FcGoogle className="mr-2 h-5 w-5"/>
                     Sign up with Google
                 </Button>
-                <Button variant="secondary" size="lg" className="w-full">
-                    <FaGithub className="mr-2 h-5 w-5" />
+                <Button disabled={isPending} variant="secondary" size="lg" className="w-full">
+                    <FaGithub className="mr-2 h-5 w-5"/>
                     Sign up with GitHub
                 </Button>
             </CardContent>
 
             <div className="px-7">
-                <DottedSeparator />
+                <DottedSeparator/>
             </div>
 
             <CardContent className="p-7 flex items-center justify-center">
