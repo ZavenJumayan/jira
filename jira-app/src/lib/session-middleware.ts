@@ -21,7 +21,7 @@ type AditionalContext = {
     }
 }
 
-import {getCookie, setCookie} from "hono/cookie";
+import {getCookie} from "hono/cookie";
 import {createMiddleware} from "hono/factory";
 import {AUTH_COOKIE} from "@/feat/auth/constant";
 
