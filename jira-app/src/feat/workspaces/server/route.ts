@@ -7,6 +7,14 @@ import { ID } from "node-appwrite";
 import { Buffer } from "buffer";  // ✔ Import Buffer if needed
 
 const app = new Hono()
+    .get("/",sessionMiddleware,async (c)=>{
+        const databases=c.get("databases");
+        const workspaces=await databases.listDocuments(
+            DATABASES_ID,
+            WORKSPACES_ID
+        )
+        return c.json({data:workspaces});
+    })
     .post("/",
         zValidator("form", createWorkspaceSchema),
         sessionMiddleware,

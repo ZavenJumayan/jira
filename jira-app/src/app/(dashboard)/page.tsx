@@ -8,8 +8,8 @@ export default async function Home() {
         redirect("/sign-in")
     }
     return (
-        <div className="bg-neutral-500 p-4 ">
-            <CreateWorkspaceForm />
+        <div className="bg-neutral-400 p-4 ">
+            <CreateWorkspaceForm/>
         </div>
     )
 
