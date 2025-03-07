@@ -2,16 +2,32 @@ import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { createWorkspaceSchema } from "@/feat/workspaces/schemas";
 import { sessionMiddleware } from "@/lib/session-middleware";
-import { DATABASES_ID, WORKSPACES_ID, IMAGES_BUCKET_ID } from "@/config";
-import { ID } from "node-appwrite";
-import { Buffer } from "buffer";  // ✔ Import Buffer if needed
+import { DATABASES_ID, WORKSPACES_ID, IMAGES_BUCKET_ID ,MEMBERS_ID} from "@/config";
+import { ID, Query} from "node-appwrite";
+import { Buffer } from "buffer";
+import {MemberRole} from "@/feat/members/types";
+import {generateInviteCode} from "@/lib/utils";
 
 const app = new Hono()
     .get("/",sessionMiddleware,async (c)=>{
+        const user=c.get("user");
         const databases=c.get("databases");
+        const members=await databases.listDocuments(
+            DATABASES_ID,
+            MEMBERS_ID,
+            [Query.equal("userId", user.$id)]
+        )
+        if(!members.documents.length){
+            return c.json({data:{documents:[],total:0}})
+        }
+        const workspaceIds=members.documents.map((member)=>member.workspaceId);
         const workspaces=await databases.listDocuments(
             DATABASES_ID,
-            WORKSPACES_ID
+            WORKSPACES_ID,
+            [
+                Query.orderDesc("$createdAt"),
+                Query.contains("$id", workspaceIds),
+            ]
         )
         return c.json({data:workspaces});
     })
@@ -45,10 +61,21 @@ const app = new Hono()
                 {
                     name: name,
                     userId: user.$id,
-                    imageUrl: uploadImageUrl,  // ✔ Save the image URL if available
+                    imageUrl: uploadImageUrl,
+                    inviteCode: generateInviteCode(9),
                 }
             );
+             await databases.createDocument(
+                 DATABASES_ID,
+                 MEMBERS_ID,
+                 ID.unique(),
+                 {
+                     userId: user.$id,
+                     workspaceId: workspace.$id,
+                     role:MemberRole.ADMIN,
+                 }
 
+             )
             return c.json({ data: workspace });
         }
     );
