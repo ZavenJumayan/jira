@@ -1,5 +1,5 @@
 import {redirect} from "next/navigation";
-import {getCurrent} from "@/feat/auth/actions";
+import {getCurrent} from "@/feat/auth/queries";
 import {SignUpCard} from "@/feat/auth/components/sign-up-card"
 const Signup=async ()=>{
     const user = await getCurrent();
