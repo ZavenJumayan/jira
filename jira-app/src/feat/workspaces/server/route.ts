@@ -10,6 +10,7 @@ import {generateInviteCode} from "@/lib/utils";
 import {updateWorkspaceSchema} from "@/feat/workspaces/schemas";
 import {getMember} from "@/feat/members/utils";
 
+
 const app = new Hono()
     .get("/", sessionMiddleware, async (c) => {
         const user = c.get("user");
@@ -96,7 +97,7 @@ const app = new Hono()
                 userId: user.$id,
             })
             if (!member || member.role !== MemberRole.ADMIN) {
-                return c.json({error: "Unauthorized//ROute.ts"}, 401);
+                return c.json({error: "Unauthorized//Route.ts"}, 401);
             }
             let uploadImageUrl: string | undefined;
 
@@ -127,6 +128,28 @@ const app = new Hono()
             return c.json({data: workspace});
 
         }
-    );
+    )
+    //  TODO DELETE MEMEBERS
+    .delete("/:workspaceId", sessionMiddleware, async (c) => {
+        const databases = c.get("databases");
+        const user = c.get("user");
+        const {workspaceId} = c.req.param();
+        const member = await getMember(
+            {
+                databases,
+                workspaceId,
+                userId: user.$id
+            }
+        )
+        if (!member || member.role !== MemberRole.ADMIN) {
+            return c.json({error: "Unauthorized"})
+        }
+        await databases.deleteDocument(
+            DATABASES_ID,
+            WORKSPACES_ID,
+            workspaceId,
+        );
+        return c.json({data:{$id:workspaceId}});
+    })
 
 export default app;
