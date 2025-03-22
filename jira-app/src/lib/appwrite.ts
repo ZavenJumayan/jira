@@ -2,7 +2,6 @@ import "server-only";
 import{
     Client,
     Account,
-    Storage,
     Users,
     Databases
 } from "node-appwrite"
@@ -37,6 +36,9 @@ export async function CreateAdminClient(){
     return{
        get Account(){
            return new Account(client);
+       },
+       get users(){
+           return new Users(client);
        }
     }
 }

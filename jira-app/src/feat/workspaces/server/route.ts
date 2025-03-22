@@ -131,7 +131,7 @@ const app = new Hono()
 
         }
     )
-    .delete("/:workspaceId", sessionMiddleware, async (c) => {
+    .delete("/:workspaceId", sessionMiddleware,async (c) => {
         const databases = c.get("databases");
         const user = c.get("user");
         const {workspaceId} = c.req.param();
@@ -143,14 +143,14 @@ const app = new Hono()
             }
         )
         if (!member || member.role !== MemberRole.ADMIN) {
-            return c.json({error: "Unauthorized"})
+            return c.json({error: "Unauthorized"},401)
         }
         await databases.deleteDocument(
             DATABASES_ID,
             WORKSPACES_ID,
             workspaceId,
         );
-        return c.json({data: {id: workspaceId}});
+        return c.json({data: {$id: workspaceId}});
     })
     .post("/:workspaceId/reset-invite-code", sessionMiddleware, async (c) => {
         const databases = c.get("databases");
@@ -195,9 +195,9 @@ const app = new Hono()
                 return c.json({error:"Already a member"},400)
             }
             const workspace=await databases.getDocument<Workspace>(
-            DATABASES_ID,
-            WORKSPACES_ID,
-             workspaceId,
+                DATABASES_ID,
+                WORKSPACES_ID,
+                workspaceId,
             );
 
             if(workspace.inviteCode==code){
@@ -207,11 +207,11 @@ const app = new Hono()
                 DATABASES_ID,
                 MEMBERS_ID,
                 ID.unique(),
-            {
-                workspaceId,
-                userId:user.$id,
-                role:MemberRole.MEMBER,
-            }
+                {
+                    workspaceId,
+                    userId:user.$id,
+                    role:MemberRole.MEMBER,
+                }
             )
             return c.json({data:workspace})
         }

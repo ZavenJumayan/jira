@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { InferRequestType, InferResponseType } from "hono";
 import { client } from "@/lib/rpc";
 
-type ResponseType = InferResponseType<typeof client.api.workspaces[":workspaceId"]["$delete"]>;
+type ResponseType = InferResponseType<typeof client.api.workspaces[":workspaceId"]["$delete"],200>;
 type RequestType = InferRequestType<typeof client.api.workspaces[":workspaceId"]["$delete"]>;
 
 export const useDeleteWorkspace = () => {
@@ -19,9 +19,10 @@ export const useDeleteWorkspace = () => {
 
             return response.json();
         },
-        onSuccess: () => {
+        onSuccess: ({data}) => {
             toast.success("Workspace deleted successfully.");
             queryClient.invalidateQueries({ queryKey: ["workspaces"] });
+            queryClient.invalidateQueries({queryKey:["workspace",data.$id]})
         },
         onError: () => {
             toast.error("Failed to delete workspace.");
