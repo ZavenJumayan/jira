@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select";
 import {useRouter} from "next/navigation";
 import {useWorkspaceId} from "@/feat/workspaces/hooks/use-workspace-id";
-import {useCreateWorkspaceModal} from "@/feat/workspaces/hooks/use-creat-workspace-modal";
+import {useCreateWorkspaceModal} from "@/feat/workspaces/hooks/use-create-workspace-modal";
 
 export const WorkspaceSwitcher = () => {
     const workspaceId = useWorkspaceId();

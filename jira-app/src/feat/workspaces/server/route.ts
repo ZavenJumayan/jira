@@ -1,6 +1,6 @@
 import {Hono} from "hono";
 import {zValidator} from "@hono/zod-validator";
-import {createWorkspaceSchema} from "@/feat/workspaces/schemas";
+import {createProjectSchema} from "@/feat/workspaces/schemas";
 import {sessionMiddleware} from "@/lib/session-middleware";
 import {DATABASES_ID, WORKSPACES_ID, IMAGES_BUCKET_ID, MEMBERS_ID} from "@/config";
 import {ID, Query} from "node-appwrite";
@@ -37,7 +37,7 @@ const app = new Hono()
         return c.json({data: workspaces});
     })
     .post("/",
-        zValidator("form", createWorkspaceSchema),
+        zValidator("form", createProjectSchema),
         sessionMiddleware,
         async (c) => {
             const databases = c.get("databases");
