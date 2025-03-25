@@ -3,7 +3,7 @@ import Image from "next/image";
 import {DottedSeparator} from "@/components/dotted-separator";
 import {Navigation} from "@/components/navigation";
 import {WorkspaceSwitcher} from "@/components/workspace-switcher";
-import {Projects} from "@/components/ui/projects";
+import {Projects} from "@/components/projects";
 
 export const Sidebar = () => {
     return (

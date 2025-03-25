@@ -9,7 +9,7 @@ import {useCreateProjectModal} from "@/feat/projects/hooks/use-create-project-mo
 import {ProjectAvatar} from "@/feat/projects/components/project-avatar";
 
 export const Projects = () => {
-    const projectId=null; //TODO: USE THE useProjectId hooks;
+
 
     const {open}=useCreateProjectModal()
     const workspaceId = useWorkspaceId();
@@ -22,10 +22,10 @@ export const Projects = () => {
                 <RiAddCircleFill onClick={open} className="size-5 text-neutral-500 cursor-pointer hover:opacity-75 transition"/>
             </div>
             {data?.documents.map((project) => {
-                const href = `/workspaces/${workspaceId}/projects/${projectId}`;
+                const href = `/workspaces/${workspaceId}/projects/${project.$id}`;
                 const isActive=pathname === href;
                 return (
-                    <Link href={href} key={projectId}>
+                    <Link href={href} key={project.$id}>
                         <div className={cn("flex items-center gap-2.5 p-2.5 rounded-md hover:opacity-75 transition cursor-pointer text-neutral-500",
                             isActive && "bg-white shadow-sm hover:opacity-100 text-primary")}>
                             <ProjectAvatar image={project.imageUrl} name={project.name}/>

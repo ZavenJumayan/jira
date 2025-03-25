@@ -1,6 +1,6 @@
 "use client";
 
-import {createProjectFormSchema, createProjectSchema} from "@/feat/projects/shemas";
+import {createProjectSchema} from "@/feat/projects/shemas";
 import {z} from "zod";
 import {useRef} from "react";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
@@ -22,22 +22,26 @@ import {Button} from "@/components/ui/button";
 
 import Image from "next/image";
 import {ImageIcon} from "lucide-react";
-import {useRouter} from "next/navigation";
+
 import {cn} from "@/lib/utils";
 import {useCreateProject} from "@/feat/projects/api/use-create-project";
 import {useWorkspaceId} from "@/feat/workspaces/hooks/use-workspace-id";
+import {useRouter} from "next/navigation";
+
 
 
 interface CreateProjectFormProps {
     onCancel?: () => void;
 }
-export const CreateProjectForm = ({onCancel}: CreateProjectFormProps) => {
 
-    const workspaceId = useWorkspaceId();
+export const CreateProjectForm = ({onCancel}: CreateProjectFormProps) => {
     const router = useRouter();
+    const workspaceId = useWorkspaceId();
     const {mutate, isPending} = useCreateProject();
     const inputRef = useRef<HTMLInputElement>(null);
+
     const form = useForm<z.infer<typeof createProjectSchema>>({
+        // @ts-expect-error type error connected with type miss-connecting
         resolver: zodResolver(createProjectSchema.omit({workspaceId: true})),
         defaultValues: {
             name: "",
@@ -52,9 +56,9 @@ export const CreateProjectForm = ({onCancel}: CreateProjectFormProps) => {
         }
         mutate({form: finalValues},
             {
-                onSuccess: () => {
+                onSuccess: ({data}) => {
                     form.reset();
-              //TODO Redirect to project screen
+                   router.push(`/workspaces/${workspaceId}/projects/${data.$id}`)
                 }
             }
         );

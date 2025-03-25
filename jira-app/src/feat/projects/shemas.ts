@@ -8,6 +8,16 @@ export const createProjectSchema = z.object({
         z.string().transform((value) => value === "" ? undefined : value),
     ])
         .optional(),
-    workspaceId: z.string()
+    workspaceId: z.string(),
+
 });
-export const createProjectFormSchema = createProjectSchema.omit({ workspaceId: true });
+
+export const updateProjectSchema = z.object({
+    name: z.string().trim().min(1, "Minimum 1 character required").optional(),
+    image: z.union([
+        z.instanceof(File),
+        z.string().transform((value) => value === "" ? undefined : value),
+    ])
+        .optional(),
+
+});
