@@ -3,6 +3,7 @@ import {Sidebar} from "@/components/sidebar";
 import {Navbar} from "@/components/navbar";
 import {CreateWorkspaceModal} from "@/feat/workspaces/components/create-workspaces-modal";
 import {CreateProjectModal} from "@/feat/projects/components/create-project-modal";
+import {CreateTaskModal} from "@/feat/tasks/components/create-task-modal";
 interface DashboardLayoutProps {
     children: ReactNode;
 }
@@ -12,6 +13,7 @@ const DashBoardLayout = ({children}: DashboardLayoutProps) => {
         <div className="min-h-screen">
             <CreateWorkspaceModal/>
             <CreateProjectModal/>
+            <CreateTaskModal/>
             <div className="flex w-full h-full">
                 <div className="fixed left-0 top-0 hidden lg:block lg:w-[264px] h-full overflow-y-auto">
                     <Sidebar />

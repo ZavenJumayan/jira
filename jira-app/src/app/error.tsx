@@ -14,7 +14,7 @@ const ErrorPage=()=>{
                 Something went wrong
             </p>
                 <Button asChild variant="secondary" size="sm">
-                    <Link href="/public">
+                    <Link href="/">
                         <HomeIcon className="size-2"/>
                             <span>Back to home page</span>
                     </Link>
