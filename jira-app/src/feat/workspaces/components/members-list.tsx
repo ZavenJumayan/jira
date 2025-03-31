@@ -68,7 +68,7 @@ export const MembersList = () => {
                 <DottedSeparator className="size-xl"/>
             </div>
             <CardContent className="p-7">
-                {data?.document.map((member, index) => (
+                {data?.documents.map((member, index) => (
                     <Fragment key={member.$id}>
                         <div className="flex items-center gap-2">
                             <MemberAvatar
