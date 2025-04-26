@@ -73,7 +73,7 @@ export const DataFilters = ({ hideProjectFilters }: DataFiltersProps) => {
                     <SelectItem value={TaskStatus.DONE}>Done</SelectItem>
                 </SelectContent>
             </Select>
-
+`````
             <Select defaultValue={assigneeId ?? "all"} onValueChange={onAssigneeChange}>
                 <SelectTrigger className="w-full lg:w-auto h-8">
                     <div className="flex items-center pr-2">
@@ -94,7 +94,8 @@ export const DataFilters = ({ hideProjectFilters }: DataFiltersProps) => {
 
             {!hideProjectFilters && (
                 <>
-                    <Select defaultValue={projectId ?? "all"} onValueChange={onProjectChange}>
+                    {!hideProjectFilters &&(
+                    <Select defaultValue={projectId ?? undefined} onValueChange={onProjectChange}>
                         <SelectTrigger className="w-full lg:w-auto h-8">
                             <div className="flex items-center pr-2">
                                 <FolderIcon className="size-4 mr-2" />
@@ -111,6 +112,7 @@ export const DataFilters = ({ hideProjectFilters }: DataFiltersProps) => {
                             ))}
                         </SelectContent>
                     </Select>
+                    )}
 
                     <DatePicker
                         placeholder="Due date"
