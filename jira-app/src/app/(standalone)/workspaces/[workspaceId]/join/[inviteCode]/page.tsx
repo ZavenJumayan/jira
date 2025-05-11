@@ -1,27 +1,15 @@
 import {getCurrent} from "@/feat/auth/queries";
 import {redirect} from "next/navigation";
-import {getWorkspaceInfo} from "@/feat/workspaces/queries";
-import {JoinWorkspaceFrom} from "@/feat/workspaces/components/join-workspace-form";
 
-interface WorkspaceIdJoinPagePageProps {
-    params: {
-        workspaceId: string;
-    }
-}
+import {WorkspaceIdJoinClient} from "@/app/(standalone)/workspaces/[workspaceId]/join/[inviteCode]/client";
 
-const WorkspaceIdJoinPage = async ({params}: WorkspaceIdJoinPagePageProps) => {
+const WorkspaceIdJoinPage = async () => {
 
     const user = await getCurrent();
     if (!user) redirect("/sign-in")
-    const initialValues = await getWorkspaceInfo({
-        workspaceId: params.workspaceId,
-    });
-    if (!initialValues) redirect("/");
-    return (
-        <div className="w-full lg:max-w-xl ">
-          <JoinWorkspaceFrom initialValues={initialValues}  />
-        </div>
-    )
+
+
+    return <WorkspaceIdJoinClient/>
 }
 
 export default WorkspaceIdJoinPage;

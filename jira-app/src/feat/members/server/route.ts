@@ -6,7 +6,7 @@ import {z} from "zod";
 import {getMember} from "@/feat/members/utils";
 import {DATABASES_ID, MEMBERS_ID} from "@/config";
 import {Query} from "node-appwrite";
-import {MemberRole} from "@/feat/members/types";
+import {Member, MemberRole} from "@/feat/members/types";
 
 const app = new Hono()
     .get(
@@ -29,7 +29,7 @@ const app = new Hono()
                 return c.json({error: "Unauthorized"}, 401);
             }
 
-            const members = await databases.listDocuments(
+            const members = await databases.listDocuments<Member>(
                 DATABASES_ID,
                 MEMBERS_ID,
                 [Query.equal("workspaceId", workspaceId)]

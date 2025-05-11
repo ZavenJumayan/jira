@@ -1,26 +1,16 @@
 import {getCurrent} from "@/feat/auth/queries";
 import {redirect} from "next/navigation";
-import {getWorkspace} from "@/feat/workspaces/queries";
-import {getProject} from "@/feat/projects/queries";
-import {EditProjectForm} from "@/feat/projects/components/edit-project-form";
-
-interface ProjectIdSettingsPageProps{
-    params:{
-        projectId:string
-    }
-}
+import {
+    ProjectIdSettingsClient
+} from "@/app/(standalone)/workspaces/[workspaceId]/projects/[projectId]/settings/client";
 
 
-const ProjectIdSettingsPage=async ({params}:ProjectIdSettingsPageProps)=>{
+const ProjectIdSettingsPage=async ()=>{
     const user=getCurrent();
     if(!user){
         redirect("/sign-in");
     }
-    const initialValues=await getProject({projectId:params.projectId});
-    return(
-      <div className="w-full lg:max-w-xl">
-         <EditProjectForm initialValues={initialValues}/>
-      </div>
-    )
+
+    return <ProjectIdSettingsClient/>
 }
 export default ProjectIdSettingsPage;

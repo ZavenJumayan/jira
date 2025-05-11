@@ -1,6 +1,6 @@
 import {Task} from "@/feat/tasks/types";
 import {Button} from "@/components/ui/button";
-import {PencilIcon, X, XIcon} from "lucide-react";
+import {PencilIcon, XIcon} from "lucide-react";
 import { DottedSeparator } from "@/components/dotted-separator";
 import {useState} from "react";
 import {useUpdateTask} from "@/feat/tasks/api/use-update-task";
@@ -18,6 +18,10 @@ export const TaskDescription=({task}:TaskDescriptionProps)=>{
     const handleSave=()=>{
        mutate({json:{description:value},
        param:{taskId:task.$id}
+       },{
+           onSuccess:()=>{
+               setIsEditing(false)
+           }
        })
     }
     return(
