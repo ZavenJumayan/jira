@@ -61,7 +61,7 @@ export const DataKanban = ({data, onChange}: DataKanbanProps) => {
         const {source, destination} = result;
         const sourceStatus = source.droppableId as TaskStatus;
         const destinationStatus = destination.droppableId as TaskStatus;
-        let updatesPayload: { $id: string; status: TaskStatus; position: number }[] = [];
+        const updatesPayload: { $id: string; status: TaskStatus; position: number }[] = [];
         setTasks((prevTasks: TasksState) => {
             const newTasks = {...prevTasks};
             const sourceColumn = [...newTasks[sourceStatus]];

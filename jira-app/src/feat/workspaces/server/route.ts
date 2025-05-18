@@ -2,7 +2,7 @@ import {Hono} from "hono";
 import {zValidator} from "@hono/zod-validator";
 import {createProjectSchema} from "@/feat/workspaces/schemas";
 import {sessionMiddleware} from "@/lib/session-middleware";
-import {DATABASES_ID, WORKSPACES_ID, IMAGES_BUCKET_ID, MEMBERS_ID, PROJECTS_ID, TASKS_ID} from "@/config";
+import {DATABASES_ID, WORKSPACES_ID, IMAGES_BUCKET_ID, MEMBERS_ID, TASKS_ID} from "@/config";
 import {ID, Query} from "node-appwrite";
 import {Buffer} from "buffer";
 import {MemberRole} from "@/feat/members/types";
@@ -11,7 +11,6 @@ import {updateWorkspaceSchema} from "@/feat/workspaces/schemas";
 import {getMember} from "@/feat/members/utils";
 import {z} from "zod"
 import {Workspace} from "@/feat/workspaces/types";
-import {Project} from "@/feat/projects/types";
 import {endOfMonth, startOfMonth, subMonths} from "date-fns";
 import {TaskStatus} from "@/feat/tasks/types";
 

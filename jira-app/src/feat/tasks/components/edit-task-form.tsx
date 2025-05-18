@@ -18,8 +18,7 @@ import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {cn} from "@/lib/utils";
 
-import {useWorkspaceId} from "@/feat/workspaces/hooks/use-workspace-id";
-import {useRouter} from "next/navigation";
+
 import {CreateTaskSchema} from "@/feat/tasks/schemas";
 import {DatePicker} from "@/components/date-picker";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
@@ -38,8 +37,7 @@ interface EditTaskFormProps {
 }
 
 export const  EditTaskForm = ({onCancel,projectOptions,memberOptions,initialValues}: EditTaskFormProps) => {
-    const router = useRouter();
-    const workspaceId = useWorkspaceId();
+
     const {mutate, isPending} = useUpdateTask();
 
 

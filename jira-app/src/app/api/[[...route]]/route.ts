@@ -8,6 +8,7 @@ import projects from "@/feat/projects/server/route";
 import tasks from "@/feat/tasks/server/route"
 const app=new Hono().basePath("/api");
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const routes=app
     .route('/auth',auth)
     .route('/workspaces',workspaces)

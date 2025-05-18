@@ -5,10 +5,11 @@ import {MemberAvatar} from "@/feat/members/components/member-avatar";
 import {ProjectAvatar} from "@/feat/projects/components/project-avatar";
 import {useWorkspaceId} from "@/feat/workspaces/hooks/use-workspace-id";
 import {useRouter} from "next/navigation";
+import { Member } from "@/feat/members/types";
 
 interface EventCardProps {
     title: string;
-    assignee: any;
+    assignee: Member;
     project:Project;
     status:TaskStatus;
     id:string;

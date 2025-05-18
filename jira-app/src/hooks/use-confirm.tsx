@@ -12,7 +12,8 @@ import {
 export const useConfirm = (
     title: string,
     message: string,
-    variant: ButtonProps["variant"]="primary",
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    variant: ButtonProps["variant"] = "outline",
 ):[()=>JSX.Element,()=>Promise<unknown>] => {
     const [promise, setPromise] = useState<{
         resolve: (value: boolean) => void;
@@ -48,7 +49,7 @@ export const useConfirm = (
                         </Button>
                         <Button  onClick={handleConfirm}
                                  variant="outline"
-                                 className="w-full lg:w-auto">Cinfirm
+                                 className="w-full lg:w-auto">Confirm
                         </Button>
                     </div>
                 </CardContent>

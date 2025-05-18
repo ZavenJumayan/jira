@@ -19,7 +19,7 @@ import {Button} from "@/components/ui/button";
 import {cn} from "@/lib/utils";
 
 import {useWorkspaceId} from "@/feat/workspaces/hooks/use-workspace-id";
-import {useRouter} from "next/navigation";
+
 import {useCreateTask} from "@/feat/tasks/api/use-create-task";
 import {CreateTaskSchema} from "@/feat/tasks/schemas";
 import {DatePicker} from "@/components/date-picker";
@@ -37,7 +37,7 @@ interface CreateTaskFormProps {
 }
 
 export const CreateTaskForm = ({onCancel,projectOptions,memberOptions}: CreateTaskFormProps) => {
-    const router = useRouter();
+
     const workspaceId = useWorkspaceId();
     const {mutate, isPending} = useCreateTask();
 
@@ -56,7 +56,6 @@ export const CreateTaskForm = ({onCancel,projectOptions,memberOptions}: CreateTa
             {
                 onSuccess: () => {
                     form.reset();
-                 //TODO: Reditect new task
                 }
             }
         );
